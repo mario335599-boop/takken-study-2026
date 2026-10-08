@@ -1,0 +1,10 @@
+学習記録*.json
+*学習記録*.json
+*backup*.json
+.env
+.env.*
+*.pem
+*.key
+work/
+node_modules/
+.DS_Store
