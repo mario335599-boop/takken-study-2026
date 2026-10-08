@@ -1,6 +1,6 @@
 'use strict';
 const PREFIX='takken2026-'+encodeURIComponent(self.registration.scope)+'-';
-const CACHE=PREFIX+'ddd27e20aa52';
+const CACHE=PREFIX+'9c43baa25796';
 const FILES=['./index.html','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 const URLS=FILES.map(p=>new URL(p,self.registration.scope).href);
 const ROOT=new URL('./',self.registration.scope).href;

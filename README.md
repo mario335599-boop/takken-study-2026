@@ -1,4 +1,4 @@
-# 宅建2026 たっけん学習室
+# 宅建2026 ノエルとルナの学習室
 
 図・キャラクター・短い用語説明で学ぶ、個人用の宅建学習サイト。
 50講義、演習200問、模試3回各50問／120分、暗記カード350枚。
@@ -41,3 +41,6 @@ PCの旧版で「記録・設定」→「JSONバックアップを保存」。JS
 本教材は理解確認用のオリジナルです。全選択肢に根拠を付けていますが、本試験と同一の難易度や合格を保証しません。公式過去問も併用してください。
 
 構成の根拠：[GitHub Pages公式ガイド](https://docs.github.com/en/pages/getting-started-with-github-pages/using-custom-workflows-with-github-pages)、[MDN：PWAのインストール](https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Guides/Making_PWAs_installable)。
+
+
+2026.3：全50講義は先生のノエルと学ぶ黒瀬ルナの会話で進みます。カーマンは演習、レイラは復習の助っ人です。顔アイコンも教材内に埋め込み、オフラインで表示できます。読了・回答・メモ・暗記カード・途中演習・模試の保存方法と問題IDは前版のままです。同じURL・ブラウザー、同じPCのHTMLファイルを使えば記録を引き継ぎます。PCとスマホの間はJSONバックアップで引き継ぎます。
