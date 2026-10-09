@@ -20,20 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: actions/configure-pages@v5
-      - name: Add 2025 official exam link to home without changing original HTML
-        run: |
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path("docs/index.html")
-          s = p.read_text(encoding="utf-8")
-          tag = '<script defer src="./2025-exam-link.js"></script>'
-          if tag not in s:
-              pos = s.lower().rfind("</body>")
-              if pos < 0:
-                  raise SystemExit("Cannot find closing body in index.html")
-              s = s[:pos] + tag + "\n" + s[pos:]
-              p.write_text(s, encoding="utf-8")
-          PY
       - uses: actions/upload-pages-artifact@v4
         with:
           path: docs

@@ -1,7 +1,7 @@
 'use strict';
 const PREFIX='takken2026-'+encodeURIComponent(self.registration.scope)+'-';
-const CACHE=PREFIX+'official-r7-20261009-v1';
-const FILES=['./index.html','./2025-exam.html','./2025-exam-link.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
+const CACHE=PREFIX+'c4b02743842d';
+const FILES=['./index.html','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 const URLS=FILES.map(p=>new URL(p,self.registration.scope).href);
 const ROOT=new URL('./',self.registration.scope).href;
 self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE);try{await cache.addAll(URLS);await self.skipWaiting()}catch(e){await caches.delete(CACHE);throw e}})()));
