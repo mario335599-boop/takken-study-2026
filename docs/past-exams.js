@@ -52,14 +52,17 @@ function pastSourceLinks(sources) {
 function pastExamPage() {
   const heading = '<div class="pagehead"><div class="eyebrow">PAST EXAMS</div><h1>宅建過去問・やさしい解説版</h1><p class="muted">問題・4つの選択肢・正解・各肢の解説を、答えを見ながら一問ずつ。</p></div>';
   if (typeof PAST_EXAMS === 'undefined') return heading + '<div class="alert">教材の読み込みに失敗しました。通信を確認してページを開き直してください。</div>';
+  const totalQuestions = PAST_EXAMS.years.reduce((sum, item) => sum + item.questions.length, 0);
+  const yearLabels = PAST_EXAMS.years.map(item => item.label).join('・');
+  const correctionCount = PAST_EXAMS.years.reduce((sum, item) => sum + item.questions.filter(q => q.corrections.length).length, 0);
   const year = PAST_EXAMS.years.find(item => item.year === Number(route.year));
-  const notice = '<div class="info"><strong>令和6年度・令和5年度、各45問の解説を掲載。</strong><br>共有された会話の本文を取得し、問題・各肢をRETIO公式問題と照合しました。正解番号は90問すべて公式表と一致しています。訂正・補足は各問に明示しています。<br><span class="small">正解番号は出題当時の法令に基づきます。2026年4月1日基準の主な改正注意を別に掲載し、出題年の条件と区別しています。全肢を2026年の設定へ置き換えて採点する教材ではありません。</span></div>';
+  const notice = `<div class="info"><strong>${yearLabels}、計${totalQuestions}問の解説を掲載。</strong><br>共有された会話の本文を取得し、問題・各肢をRETIO公式問題と照合しました。正解番号は${totalQuestions}問すべて公式表と一致しています。訂正・補足は各問に明示しています。<br><span class="small">正解番号は出題当時の法令に基づきます。2026年4月1日基準の主な改正注意を別に掲載し、出題年の条件と区別しています。全肢を2026年の設定へ置き換えて採点する教材ではありません。</span></div>`;
   const sourceIndex = '<p class="source">公式出典：一般財団法人 不動産適正取引推進機構（RETIO） <a href="https://www.retio.or.jp/exam/past_ques_ans/other/" target="_blank" rel="noopener noreferrer">試験問題と正解番号表</a></p>';
   if (!year) {
     const correctionList = PAST_EXAMS.years.flatMap(item => item.questions.filter(q => q.corrections.length).map(q => `<li>${btn(`${item.label}・問${q.number}`, `pastquestion:${item.year}:${q.number}`)} ${esc(q.corrections.join(' '))}</li>`)).join('');
     return heading + notice + '<div class="grid two">' + PAST_EXAMS.years.map(item =>
       `<section class="card"><span class="pill">問1〜${item.questions.length} ｜ 解説あり</span><h2>${esc(item.label)} <span class="muted">（${item.year}）</span></h2><p>やさしい言い換え・難語の意味・全肢解説・覚え方</p>${btn('問1から読む', 'pastyear:' + item.year, 'class="primary"')}<p class="source"><a href="${esc(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">公式問題・正解PDFを開く</a></p></section>`
-    ).join('') + '</div><details><summary>2026年4月1日基準の主な改正注意</summary><div class="inside">' + PAST_EXAMS.years[0].amendmentNotes.map(note => `<p>${pastInline(note.text)}</p><p class="source">${pastSourceLinks([note.source])}</p>`).join('') + '</div></details><details><summary>元の会話からの訂正・補足（8問）</summary><div class="inside"><ul class="past-corrections">' + correctionList + '</ul></div></details>' + sourceIndex;
+    ).join('') + '</div><details><summary>2026年4月1日基準の主な改正注意</summary><div class="inside">' + PAST_EXAMS.years[0].amendmentNotes.map(note => `<p>${pastInline(note.text)}</p><p class="source">${pastSourceLinks([note.source])}</p>`).join('') + '</div></details><details><summary>元の会話からの訂正・補足（' + correctionCount + '問）</summary><div class="inside"><ul class="past-corrections">' + correctionList + '</ul></div></details>' + sourceIndex;
   }
   const question = year.questions.find(item => item.number === Number(route.question)) || year.questions[0];
   const text = value => String(value).split('\n\n').map(p => `<p>${pastInline(p)}</p>`).join('');

@@ -1,6 +1,6 @@
 'use strict';
 const PREFIX='takken2026-'+encodeURIComponent(self.registration.scope)+'-';
-const CACHE=PREFIX+'past-exams-20261016-v1';
+const CACHE=PREFIX+'past-exams-20261016-v2';
 const FILES=['./index.html','./past-exams-data.js','./past-exams.js','./past-exams.css','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 const URLS=FILES.map(p=>new URL(p,self.registration.scope).href);
 const ROOT=new URL('./',self.registration.scope).href;
