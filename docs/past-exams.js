@@ -50,6 +50,7 @@ function pastSourceLinks(sources) {
   return sources.map(source => `<a href="${esc(source.url)}" target="_blank" rel="noopener noreferrer">${esc(source.label)}</a>`).join(' ／ ');
 }
 function pastExamPage() {
+  if (route.prediction) return predictionExplanationPage();
   const heading = '<div class="pagehead"><div class="eyebrow">PAST EXAMS</div><h1>宅建過去問・やさしい解説版</h1><p class="muted">問題・4つの選択肢・正解・各肢の解説を、答えを見ながら一問ずつ。</p></div>';
   if (typeof PAST_EXAMS === 'undefined') return heading + '<div class="alert">教材の読み込みに失敗しました。通信を確認してページを開き直してください。</div>';
   const totalQuestions = PAST_EXAMS.years.reduce((sum, item) => sum + item.questions.length, 0);
@@ -60,7 +61,7 @@ function pastExamPage() {
   const sourceIndex = '<p class="source">公式出典：一般財団法人 不動産適正取引推進機構（RETIO） <a href="https://www.retio.or.jp/exam/past_ques_ans/other/" target="_blank" rel="noopener noreferrer">試験問題と正解番号表</a></p>';
   if (!year) {
     const correctionList = PAST_EXAMS.years.flatMap(item => item.questions.filter(q => q.corrections.length).map(q => `<li>${btn(`${item.label}・問${q.number}`, `pastquestion:${item.year}:${q.number}`)} ${esc(q.corrections.join(' '))}</li>`)).join('');
-    return heading + notice + '<div class="grid two">' + PAST_EXAMS.years.map(item =>
+    return heading + predictionExplanationCard() + notice + '<div class="grid two">' + PAST_EXAMS.years.map(item =>
       `<section class="card"><span class="pill">問1〜${item.questions.length} ｜ 解説あり</span><h2>${esc(item.label)} <span class="muted">（${item.year}）</span></h2><p>やさしい言い換え・難語の意味・全肢解説・覚え方</p>${btn('問1から読む', 'pastyear:' + item.year, 'class="primary"')}<p class="source"><a href="${esc(item.sourceUrl)}" target="_blank" rel="noopener noreferrer">公式問題・正解PDFを開く</a></p></section>`
     ).join('') + '</div><details><summary>2026年4月1日基準の主な改正注意</summary><div class="inside">' + PAST_EXAMS.years[0].amendmentNotes.map(note => `<p>${pastInline(note.text)}</p><p class="source">${pastSourceLinks([note.source])}</p>`).join('') + '</div></details><details><summary>元の会話からの訂正・補足（' + correctionCount + '問）</summary><div class="inside"><ul class="past-corrections">' + correctionList + '</ul></div></details>' + sourceIndex;
   }
