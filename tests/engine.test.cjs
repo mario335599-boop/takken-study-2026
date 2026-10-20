@@ -1,0 +1,9 @@
+const fs=require('fs'),assert=require('node:assert/strict'),vm=require('vm'),path=require('node:path');
+const ctx={};vm.createContext(ctx);vm.runInContext(fs.readFileSync(path.join(__dirname,'../docs/past-exams-data.js'),'utf8')+';globalThis.past=PAST_EXAMS',ctx);
+const bank=Object.fromEntries(ctx.past.years.flatMap(y=>y.questions.map(q=>[`${y.year}-${q.number}`,{...q,year:y.year,group:q.number<=14?'権利関係':q.number<=22?'法令上の制限':q.number<=25?'税・その他':'宅建業法'}])));
+const E=require('../docs/study-engine.js');
+const DAY='2026-10-20';assert(E.off(DAY));assert(E.off('2026-10-21'));assert(!E.off('2026-10-24'));assert.equal(E.week('2026-10-26'),DAY);
+let r=E.nextReview(null,true,DAY);assert.equal(r.due,'2026-10-21');r=E.nextReview(r,true,'2026-10-21');assert.equal(r.due,'2026-10-24');r=E.nextReview(r,true,'2026-10-24');assert.equal(r.due,'2026-10-31');r=E.nextReview(r,true,'2026-10-31');assert.equal(r.due,'2026-11-21');r=E.nextReview(r,false,'2026-11-21');assert.equal(r.due,'2026-11-22');
+let first=E.nextReview(null,true,DAY);assert.equal(E.nextReview(first,true,DAY).level,0);
+let s=E.fresh();s.attempts=[{id:'one',qid:'2025-26',at:Date.parse('2026-10-20T10:00:00+09:00'),answer:bank['2025-26'].officialAnswer,correct:false,quality:1,reasons:['a','b','c','d'],cause:'根拠が曖昧'}];s=E.validate(s,bank);assert(s.attempts[0].correct);assert.equal(E.due(s,'2026-10-21').length,1);assert.equal(E.metrics(s,bank)[0].understood,0);const merged=E.merge(s,s,bank);assert.equal(merged.attempts.length,1);assert.throws(()=>E.validate({...s,attempts:[...s.attempts,{...s.attempts[0]}]},bank));assert.throws(()=>E.validate({...s,attempts:[{...s.attempts[0],quality:2,reasons:['','','','']}]},bank));
+console.log('PASS scheduling 1/3/7/21, failure reset, no same-day promotion, Tuesday week, independent reason metric, strict import and dedup');

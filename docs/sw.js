@@ -1,7 +1,7 @@
 'use strict';
 const PREFIX='takken2026-'+encodeURIComponent(self.registration.scope)+'-';
-const CACHE=PREFIX+'prediction-20261016-v2';
-const FILES=['./index.html','./prediction-mock-data.js','./prediction-mock.js','./prediction-explanations.js','./past-exams-data.js','./past-exams.js','./past-exams.css','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
+const CACHE=PREFIX+'study-20271020-v1';
+const FILES=['./index.html','./archive-2026.html','./study-engine.js','./study-2027.js','./study-2027.css','./prediction-mock-data.js','./prediction-mock.js','./prediction-explanations.js','./past-exams-data.js','./past-exams.js','./past-exams.css','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 const URLS=FILES.map(p=>new URL(p,self.registration.scope).href);
 const ROOT=new URL('./',self.registration.scope).href;
 self.addEventListener('install',event=>event.waitUntil((async()=>{const cache=await caches.open(CACHE);try{await cache.addAll(URLS);await self.skipWaiting()}catch(e){await caches.delete(CACHE);throw e}})()));
