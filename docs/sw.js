@@ -1,6 +1,6 @@
 'use strict';
 const PREFIX='takken2026-'+encodeURIComponent(self.registration.scope)+'-';
-const CACHE=PREFIX+'study-20271020-v1';
+const CACHE=PREFIX+'study-20271020-v2';
 const FILES=['./index.html','./archive-2026.html','./study-engine.js','./study-2027.js','./study-2027.css','./prediction-mock-data.js','./prediction-mock.js','./prediction-explanations.js','./past-exams-data.js','./past-exams.js','./past-exams.css','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 const URLS=FILES.map(p=>new URL(p,self.registration.scope).href);
 const ROOT=new URL('./',self.registration.scope).href;
